@@ -1,0 +1,41 @@
+<nz-table
+  #rowSelectionTable
+  [nzData]="listOfAllData"
+  (nzCurrentPageDataChange)="currentPageDataChange($event)"
+  [nzTitle]=titre
+  style="text-align: center"
+  nzPaginationPosition="both"
+  nzPageSize="24"
+  nzBordered="true"
+  nzSize="default"
+  [(nzPageIndex)]="Chiffre"
+>
+  <thead>
+  <tr>
+    <!-- | | ""-->
+    <!--nzShowCheckBox montre la cause a coché tout en haut -->
+    <!--nzChecked verifie que toutes les cases ont été coché pour coché la case tout en haut-->
+    <!--nzIndeterminate verifie qu'au moins une case a été coché pour remplire la case tout en haut-->
+    <!--nzCheckedChange check toutes les checkbox une fois appuyer sur la checkbox tout en haut-->
+    <th
+      nzShowCheckbox
+      nzAlign="center"
+      [(nzChecked)]="isAllDisplayDataChecked"
+      [nzIndeterminate]="isIndeterminate"
+      (nzCheckedChange)="checkAll($event)"
+    ></th>
+    <th nzAlign="center">Nom du cours</th>
+    <th nzAlign="center">Nombre de crédits</th>
+    <th nzAlign="center">Nombre d'heures</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of rowSelectionTable.data">
+    <!--nzCheckChange va rafrechir le status car une case à été coché pour que la case tout en haut passe dans mode -->
+    <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+    <td nzAlign="center">{{ data.name }}</td>
+    <td nzAlign="center">{{ data.age }}</td>
+    <td nzAlign="center">{{ data.address }}</td>
+  </tr>
+  </tbody>
+</nz-table>
