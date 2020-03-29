@@ -143,7 +143,7 @@ export class HELBComponent implements OnInit {
                                         var nomCours  = recombinerSplit(temp);
 
                                         var tabInfo = nomCours.split("•");
-                                        var nomClasse = tabInfo[1];//  TO USE
+                                        var nomClasse = tabInfo[1]; //  TO USE
                                         var nomGroupeSemaine = tabInfo[2];     //  TO USE
                                         var string = tabInfo[0];
                                         var iteration = catchFirstMajLetter(string);
