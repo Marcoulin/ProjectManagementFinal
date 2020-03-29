@@ -1,0 +1,55 @@
+<h3 style="margin-top: 30px; text-align: center">Horaire Général :</h3>
+<div class="table-responsive">
+  <nz-table
+    #MainTable
+    [nzData]="sheduleTab"
+    nzBordered
+    nzPageSize="46"
+    [(nzPageIndex)]="Chiffre"
+    (nzCurrentPageDataChange)="currentPageDataChange($event)"
+    nzPaginationPosition="both"
+  >
+    <thead>
+    <tr>
+      <th></th>
+      <ng-container *ngFor="let items of sheduleTab[0] | slice:1;  let i =index; let isEven =even;  ">
+        <th *ngIf="isEven" colspan="2">{{items}}</th>
+      </ng-container>
+    </tr>
+    </thead>
+    <tbody>
+    <tr >
+        <td></td>
+      <ng-container *ngFor="let items of sheduleTab[1] | slice:1;  let i =index; let isEven =even;  ">
+        <td *ngIf="isEven" colspan="2">{{items}}</td>
+      </ng-container>
+    </tr>
+    <tr *ngFor="let items of MainTable.data  | slice:2; ">
+      <ng-container *ngFor="let item of items;">
+      <td >{{item}}</td>
+      </ng-container>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+<div style="margin-bottom: 50px; display: flex; flex-direction: column">
+  <h3 style="margin-top: 30px; text-align: center">Ajout d'un nouvel horaire :</h3>
+  <nz-upload
+    nzType="drag"
+    [nzMultiple]="true"
+    [nzLimit]="1"
+    [nzBeforeUpload]="beforeUpload"
+  >
+    <p class="ant-upload-drag-icon">
+      <i nz-icon nzType="inbox"></i>
+    </p>
+    <p class="ant-upload-text">Click or drag file to this area to upload</p>
+    <p class="ant-upload-hint">
+      Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
+    </p>
+  </nz-upload>
+</div>
+<div style="display: flex; flex-direction: column; background-color: #636e72; color: white; text-align: center">
+  <p>Communication : Madame Nathalie Delande </p>
+  <p>Adresse mail: nathalie.delande@helb-prigogine.be </p>
+</div>
