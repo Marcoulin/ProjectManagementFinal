@@ -63,6 +63,12 @@ def DeleteAllCourse(request):
 
 @csrf_exempt
 def getScheduleFromDB(request):
-    query = CoursT.objects.all()
-    serializer = CoursTSerializer(query, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    queryLundi = CoursT.objects.all().filter(jour="LUNDI")
+    queryMardi = CoursT.objects.all().filter(jour="MARDI")
+    queryMercredi = CoursT.objects.all().filter(jour="MERCREDI")
+    queryJeudi = CoursT.objects.all().filter(jour="JEUDI")
+    queryVendredi = CoursT.objects.all().filter(jour="VENDREDI")
+    matrix = [queryLundi, queryMardi, queryMercredi, queryJeudi, queryVendredi]
+    doublematrix = [CoursTSerializer(matrix[x], many=True).data for x in range(len(matrix))]
+    json.dumps(doublematrix)
+    return JsonResponse(doublematrix, safe=False)
