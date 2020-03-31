@@ -13,6 +13,7 @@ export class TableGeneralComponent implements OnInit {
   sheduleTab: any = [[]];
   Chiffre = 1;
   Quadrimestre: number;
+  nouveauTab = new Array<any>(12);
 
   constructor(private msg: NzMessageService, private api: ApiService, private http: HttpClient) {
   }
@@ -20,7 +21,26 @@ export class TableGeneralComponent implements OnInit {
   ngOnInit(): void {
     this.api.getScheduleFromDB().subscribe(data => {
       console.log(data);
-      console.log(data[1][0].nom_cours);
+      this.sheduleTab = data;
+      console.log(data);
+      for (let i = 0; i < this.nouveauTab.length; i++) {
+        this.nouveauTab[i] = new Array(46);
+      }
+      this.nouveauTab[2][5] = 'coucou';
+      console.log(this.nouveauTab);
+      for (let i = 0; i < this.sheduleTab.length; i++) {
+        for (let j = 0; j < this.sheduleTab[i].length; j++) {
+          const cours = data[i][j].nom_cours;
+          const groupe = data[i][j].groupe;
+          const heureD = data[i][j].heure_debut;
+          const heureF = data[i][j].heure_fin;
+          const local = data[i][j].local;
+          const prof = data[i][j].nom_prof;
+          const jour = data[i][j].jour;
+          const quadrimestre = data[i][j].quadrimestre;
+          this.sheduleTab[i][j] = `${cours} \n ${groupe} \n ${heureD} \n ${heureF} \n ${local} \n ${prof}`;
+        }
+      }
     });
   }
 
@@ -100,7 +120,6 @@ export class TableGeneralComponent implements OnInit {
   };
 
   currentPageDataChange($event: ItemData[]): void {
-    console.log($event);
   }
 
   getDureeCours(heureDebut, heureFin) {

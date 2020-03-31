@@ -2,11 +2,11 @@
 <div class="table-responsive">
   <nz-table
     #MainTable
+    (nzCurrentPageDataChange)="currentPageDataChange($event)"
+    [(nzPageIndex)]="Chiffre"
     [nzData]="sheduleTab"
     nzBordered
     nzPageSize="46"
-    [(nzPageIndex)]="Chiffre"
-    (nzCurrentPageDataChange)="currentPageDataChange($event)"
     nzPaginationPosition="both"
   >
     <thead>
@@ -18,15 +18,15 @@
     </tr>
     </thead>
     <tbody>
-    <tr >
-        <td></td>
-      <ng-container *ngFor="let items of sheduleTab[1] | slice:1;  let i =index; let isEven =even;  ">
+    <tr>
+      <td></td>
+      <ng-container *ngFor="let items of sheduleTab[0] | slice:1;  let i =index; let isEven =even;  ">
         <td *ngIf="isEven" colspan="2">{{items}}</td>
       </ng-container>
     </tr>
     <tr *ngFor="let items of MainTable.data  | slice:2; ">
       <ng-container *ngFor="let item of items;">
-      <td >{{item}}</td>
+        <td>{{item}}</td>
       </ng-container>
     </tr>
     </tbody>
@@ -35,10 +35,10 @@
 <div style="margin-bottom: 50px; display: flex; flex-direction: column">
   <h3 style="margin-top: 30px; text-align: center">Ajout d'un nouvel horaire :</h3>
   <nz-upload
-    nzType="drag"
-    [nzMultiple]="true"
-    [nzLimit]="1"
     [nzBeforeUpload]="beforeUpload"
+    [nzLimit]="1"
+    [nzMultiple]="true"
+    nzType="drag"
   >
     <p class="ant-upload-drag-icon">
       <i nz-icon nzType="inbox"></i>
@@ -53,3 +53,14 @@
   <p>Communication : Madame Nathalie Delande </p>
   <p>Adresse mail: nathalie.delande@helb-prigogine.be </p>
 </div>
+<table class="table table-bordered">
+  <thead>
+  </thead>
+  <tbody>
+  <tr *ngFor="let items of sheduleTab ">
+    <ng-container *ngFor="let item of items;">
+      <td>{{item}}</td>
+    </ng-container>
+  </tr>
+  </tbody>
+</table>
