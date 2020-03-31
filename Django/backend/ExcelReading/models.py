@@ -8,13 +8,14 @@ class Movie(models.Model):
 
 
 class CoursT(models.Model):
-    nom_cours = models.CharField(max_length=200, unique=True)
+    nom_cours = models.CharField(max_length=200, unique=False)
     groupe = models.IntegerField(null=True)
     quadrimestre = models.IntegerField(null=False)
     nom_prof = models.CharField(max_length=200)
     heure_debut = models.CharField(max_length=200)
     heure_fin = models.CharField(max_length=200)
     local = models.CharField(max_length=200)
+    jour = models.CharField(max_length=200, null=True)
 
 
 class Cours(models.Model):
