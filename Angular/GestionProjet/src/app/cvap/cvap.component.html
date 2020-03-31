@@ -1,14 +1,19 @@
+<div style="display: flex; margin-top: 20px">
+  <div class="btn-group" style="width: 100%">
+    <button (click)="ButtonChange(1)" class="btn btn-primary btn-block" style="margin-top: 8px" type="button">1</button>
+    <button (click)="ButtonChange(2)" class="btn btn-secondary btn-block" type="button">2</button>
+    <button (click)="ButtonChange(3)" class="btn btn-success btn-block" type="button">3</button>
+    <button (click)="ButtonChange(4)" class="btn btn-danger btn-block" type="button">4</button>
+    <button (click)="ButtonChange(5)" class="btn btn-warning btn-block" type="button">5</button>
+  </div>
+</div>
 <nz-table
   #rowSelectionTable
   [nzData]="listOfAllData"
-  (nzCurrentPageDataChange)="currentPageDataChange($event)"
   [nzTitle]=titre
-  style="text-align: center"
-  nzPaginationPosition="both"
-  nzPageSize="24"
   nzBordered="true"
   nzSize="default"
-  [(nzPageIndex)]="Chiffre"
+  style="text-align: center"
 >
   <thead>
   <tr>
@@ -18,11 +23,11 @@
     <!--nzIndeterminate verifie qu'au moins une case a été coché pour remplire la case tout en haut-->
     <!--nzCheckedChange check toutes les checkbox une fois appuyer sur la checkbox tout en haut-->
     <th
-      nzShowCheckbox
-      nzAlign="center"
+      (nzCheckedChange)="checkAll($event)"
       [(nzChecked)]="isAllDisplayDataChecked"
       [nzIndeterminate]="isIndeterminate"
-      (nzCheckedChange)="checkAll($event)"
+      nzAlign="center"
+      nzShowCheckbox
     ></th>
     <th nzAlign="center">Nom du cours</th>
     <th nzAlign="center">Nombre de crédits</th>
@@ -32,10 +37,10 @@
   <tbody>
   <tr *ngFor="let data of rowSelectionTable.data">
     <!--nzCheckChange va rafrechir le status car une case à été coché pour que la case tout en haut passe dans mode -->
-    <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
-    <td nzAlign="center">{{ data.name }}</td>
-    <td nzAlign="center">{{ data.age }}</td>
-    <td nzAlign="center">{{ data.address }}</td>
+    <td (nzCheckedChange)="refreshStatus()" [(nzChecked)]="mapOfCheckedId[data.id]" nzShowCheckbox></td>
+    <td nzAlign="center">{{ data.cours }}</td>
+    <td nzAlign="center">{{ data.nombre_credit }}</td>
+    <td nzAlign="center">{{ data.nombre_heure }}</td>
   </tr>
   </tbody>
 </nz-table>

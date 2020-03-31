@@ -18,6 +18,7 @@ import { CVAPComponent } from './cvap/cvap.component';
 import { TableHoraireComponent } from './table-horaire/table-horaire.component';
 import { HELBComponent } from './helb/helb.component';
 import {ApiService} from "./Services/api.service";
+import { TableGeneralComponent } from './table-general/table-general.component';
 
 registerLocaleData(fr);
 
@@ -36,7 +37,8 @@ const appRoutes: Routes = [
     NavbarComponent,
     CVAPComponent,
     TableHoraireComponent,
-    HELBComponent
+    HELBComponent,
+    TableGeneralComponent
   ],
   imports: [
     BrowserModule,
