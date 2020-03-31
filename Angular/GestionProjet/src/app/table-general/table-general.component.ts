@@ -20,7 +20,7 @@ export class TableGeneralComponent implements OnInit {
   ngOnInit(): void {
     this.api.getScheduleFromDB().subscribe(data => {
       console.log(data);
-      console.log(data[0].nom_cours);
+      console.log(data[1][0].nom_cours);
     });
   }
 
