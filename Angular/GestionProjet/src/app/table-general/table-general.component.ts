@@ -13,7 +13,7 @@ export class TableGeneralComponent implements OnInit {
   sheduleTab: any = [[]];
   Chiffre = 1;
   Quadrimestre: number;
-  nouveauTab = new Array<any>(12);
+  nouveauTab = new Array<any>(11);
 
   constructor(private msg: NzMessageService, private api: ApiService, private http: HttpClient) {
   }
@@ -22,25 +22,37 @@ export class TableGeneralComponent implements OnInit {
     this.api.getScheduleFromDB().subscribe(data => {
       console.log(data);
       this.sheduleTab = data;
-      console.log(data);
+      const quadriTemp = 'Q' + this.sheduleTab[1][1].quadrimestre;
       for (let i = 0; i < this.nouveauTab.length; i++) {
-        this.nouveauTab[i] = new Array(46);
+        this.nouveauTab[i] = new Array(6);
       }
-      this.nouveauTab[2][5] = 'coucou';
+      this.nouveauTab[1][0] = '';
+      this.nouveauTab[0][1] = 'LUNDI';
+      this.nouveauTab[0][3] = 'MARDI';
+      this.nouveauTab[0][5] = 'MERCREDI';
+      this.nouveauTab[0][7] = 'JEUDI';
+      this.nouveauTab[0][9] = 'VENDREDI';
+      this.nouveauTab[1][1] = quadriTemp;
+      this.nouveauTab[1][3] = quadriTemp;
+      this.nouveauTab[1][5] = quadriTemp;
+      this.nouveauTab[1][7] = quadriTemp;
+      this.nouveauTab[1][9] = quadriTemp;
       console.log(this.nouveauTab);
       for (let i = 0; i < this.sheduleTab.length; i++) {
         for (let j = 0; j < this.sheduleTab[i].length; j++) {
           const cours = data[i][j].nom_cours;
-          const groupe = data[i][j].groupe;
+          const groupe = (data[i][j].groupe === 0) ? 'TOUS' : ((data[i][j].groupe === 1) ? 'Gr. 1' : 'Gr. 2');
           const heureD = data[i][j].heure_debut;
           const heureF = data[i][j].heure_fin;
           const local = data[i][j].local;
           const prof = data[i][j].nom_prof;
           const jour = data[i][j].jour;
           const quadrimestre = data[i][j].quadrimestre;
-          this.sheduleTab[i][j] = `${cours} \n ${groupe} \n ${heureD} \n ${heureF} \n ${local} \n ${prof}`;
+          this.sheduleTab[i][j] = `${heureD} - ${heureF}  \n ${cours}  \n ${prof}  \n ${local} \n ${groupe}`;
+          this.nouveauTab[j + 2][(i * 2) + 1] = this.sheduleTab[i][j];
         }
       }
+      this.sheduleTab = this.nouveauTab;
     });
   }
 
@@ -53,16 +65,16 @@ export class TableGeneralComponent implements OnInit {
         this.Quadrimestre = Number(this.sheduleTab[1][1].charAt(1));
         console.log('voici le quadrimestre:---' + this.Quadrimestre + '----');
         this.api.deleteCourses(this.Quadrimestre);
-        //let heure = '';
+        // let heure = '';A
         for (let i = 0; i < this.sheduleTab.length; i++) {
           for (let j = 1; j < this.sheduleTab[i].length - 1; j++) {
             /*  Extraite heure de debut et heure de fin de chaque cours */
-            //let heure = '';
-            let stringHeure = this.sheduleTab[i][j];
+            // let heure = '';
+            const stringHeure = this.sheduleTab[i][j];
             let faireTraitement = false;
-            //if (stringHeure.length > 15) {
+            // if (stringHeure.length > 15) {
             /*for (let z = 0; z < stringHeure.length; z++) {
-              // s'il n'ya pas de H on fais rien car ca a deja été traité
+              // s'il n'ya pas de  on fais rien car ca a deja été traité
               if (stringHeure.charAt(z) === 'h') {
                 faireTraitement = true;
               }
@@ -70,30 +82,30 @@ export class TableGeneralComponent implements OnInit {
             faireTraitement = (stringHeure.includes('h'));
             if (faireTraitement) {
               //    Extraction Heure debut et heure de fin pour calculer la duree du cours
-              let temp = stringHeure.split('h');
-              let heureDebut = temp[0];
+              const temp = stringHeure.split('h');
+              const heureDebut = temp[0];
               let heureFin = temp[1];
-              let heureDebutMinute = heureFin.substring(0, 2);
-              let stringHeureDebut = heureDebut + 'h' + heureDebutMinute; //  TO USE
+              const heureDebutMinute = heureFin.substring(0, 2);
+              const stringHeureDebut = heureDebut + 'h' + heureDebutMinute; //  TO USE
               heureFin = heureFin.substring(heureFin.length - 2, heureFin.length);
-              let dureeCours = this.getDureeCours(heureDebut, heureFin);
-              let nbFoisrepeter = (dureeCours * 60) / 15;
-              let stringHeureFin = heureFin + 'h' + heureDebutMinute;//  TO USE
-              //console.log(' heure de debut = ' + stringHeureDebut + ' heure de fin ' + stringHeureFin);
+              const dureeCours = this.getDureeCours(heureDebut, heureFin);
+              const nbFoisrepeter = (dureeCours * 60) / 15;
+              const stringHeureFin = heureFin + 'h' + heureDebutMinute; //  TO USE
+              // console.log(' heure de debut = ' + stringHeureDebut + ' heure de fin ' + stringHeureFin);
               //    Extraire le nom du cours
-              var nomCours = this.recombinerSplit(temp);
-              let jour = (this.sheduleTab[0][j] === '') ? this.sheduleTab[0][j - 1] : this.sheduleTab[0][j];
-              let tabInfo = nomCours.split('•');
-              let nomClasse = tabInfo[1]; //  TO USE
-              let nomGroupeSemaine = tabInfo[2];     //  TO USE
-              let groupe = (stringHeure.includes('Gr. 1')) ? 1 : ((stringHeure.includes('Gr. 2')) ? 2 : 0);
-              let string = tabInfo[0];
-              let iteration = this.catchFirstMajLetter(string);
-              let nomProf = string.substring(iteration, string.length - 1);//  TO USE
-              var nomCours = string.substring(1, iteration - 1);//  TO USE
+              let nomCours = this.recombinerSplit(temp);
+              const jour = (this.sheduleTab[0][j] === '') ? this.sheduleTab[0][j - 1] : this.sheduleTab[0][j];
+              const tabInfo = nomCours.split('•');
+              const nomClasse = tabInfo[1]; //  TO USE
+              const nomGroupeSemaine = tabInfo[2];     //  TO USE
+              const groupe = (stringHeure.includes('Gr. 1')) ? 1 : ((stringHeure.includes('Gr. 2')) ? 2 : 0);
+              const stringO = tabInfo[0];
+              const iteration = this.catchFirstMajLetter(stringO);
+              const nomProf = stringO.substring(iteration, stringO.length - 1); //  TO USE
+              nomCours = stringO.substring(1, iteration - 1); //  TO USE
               console.log(`le cours ${nomCours} se déroule le ${jour}`);
-              //console.log(`voici le nom du cours ${nomCours} et voici son groupe ${groupe}`);
-              //console.log(' le nom du prof = ' + nomProf + ' le nom du cours = ' + nomCours);
+              // console.log(`voici le nom du cours ${nomCours} et voici son groupe ${groupe}`);
+              // console.log(' le nom du prof = ' + nomProf + ' le nom du cours = ' + nomCours);
               const CoursT = {
                 nomCours,
                 nomProf,
@@ -117,7 +129,7 @@ export class TableGeneralComponent implements OnInit {
       error => {
       });
     return false;
-  };
+  }
 
   currentPageDataChange($event: ItemData[]): void {
   }
@@ -140,7 +152,7 @@ export class TableGeneralComponent implements OnInit {
 
   recombinerSplit(stringTab) {
     let stock = '';
-    let temp = false;
+    const temp = false;
     stock = stringTab[2];
     stringTab[2] = stock.substring(2, stock.length);
     stock = '';

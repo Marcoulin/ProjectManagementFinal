@@ -20,13 +20,13 @@
     <tbody>
     <tr>
       <td></td>
-      <ng-container *ngFor="let items of sheduleTab[0] | slice:1;  let i =index; let isEven =even;  ">
+      <ng-container *ngFor="let items of sheduleTab[1] | slice:1;  let i =index; let isEven =even;  ">
         <td *ngIf="isEven" colspan="2">{{items}}</td>
       </ng-container>
     </tr>
     <tr *ngFor="let items of MainTable.data  | slice:2; ">
       <ng-container *ngFor="let item of items;">
-        <td>{{item}}</td>
+        <td style="white-space: pre-line; text-align: center">{{item}}</td>
       </ng-container>
     </tr>
     </tbody>
@@ -53,14 +53,3 @@
   <p>Communication : Madame Nathalie Delande </p>
   <p>Adresse mail: nathalie.delande@helb-prigogine.be </p>
 </div>
-<table class="table table-bordered">
-  <thead>
-  </thead>
-  <tbody>
-  <tr *ngFor="let items of sheduleTab ">
-    <ng-container *ngFor="let item of items;">
-      <td>{{item}}</td>
-    </ng-container>
-  </tr>
-  </tbody>
-</table>
