@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+body
+{
+  background-color:#F8F8F8;
+}
+
+.bg-title
+{
+  width:30%;
+  height:30%;
+  background-color:#ffbf00;
+  border-style:solid;
+  border-width:1px;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+}
+
+.margin-title
+{
+  display:flex;
+  justify-content:center;
+  height:20%;
+  align-items:center;
+}

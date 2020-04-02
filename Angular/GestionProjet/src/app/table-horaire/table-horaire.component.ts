@@ -24,7 +24,6 @@ export class TableHoraireComponent implements OnInit {
       this.heure.push(""+this.heures+":"+this.minutes+"h - "+this.heures+":"+(this.minutes+15)+"h");
       }
       this.minutes+=15;
-      //coucou salut tlm
     }
   }
 
