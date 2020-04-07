@@ -1,4 +1,8 @@
-<h3 style="margin-top: 30px; text-align: center">Horaire Général :</h3>
+<div class="margin-title">
+  <div class="bg-title">
+    <h3 style="color:white; margin:0px;">Horaire Général : </h3>
+  </div>
+</div>
 <div class="table-responsive">
   <nz-table
     #MainTable
@@ -13,7 +17,7 @@
     <tr>
       <th></th>
       <ng-container *ngFor="let items of sheduleTab[0] | slice:1;  let i =index; let isEven =even;  ">
-        <th *ngIf="isEven" colspan="2">{{items}}</th>
+        <th *ngIf="isEven" colspan="2"  style="background-color:#b666d2;">{{items}}</th>
       </ng-container>
     </tr>
     </thead>
@@ -33,7 +37,11 @@
   </nz-table>
 </div>
 <div style="margin-bottom: 50px; display: flex; flex-direction: column">
-  <h3 style="margin-top: 30px; text-align: center">Ajout d'un nouvel horaire :</h3>
+  <div class="margin-title">
+  <div class="bg-title">
+    <h3 style="color:white; margin:0px;">Ajout d'un nouvel horaire : </h3>
+  </div>
+</div>
   <nz-upload
     [nzBeforeUpload]="beforeUpload"
     [nzLimit]="1"
