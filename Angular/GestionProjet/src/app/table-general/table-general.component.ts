@@ -1,58 +1,158 @@
 import {Component, OnInit} from '@angular/core';
-import {NzMessageService, UploadFile} from 'ng-zorro-antd';
-import {ApiService} from '../Services/api.service';
-import {HttpClient} from '@angular/common/http';
-import {ItemData} from '../item-data';
+  import {NzMessageService, UploadFile} from 'ng-zorro-antd';
+  import {ApiService} from '../Services/api.service';
+  import {HttpClient} from '@angular/common/http';
+  import {ItemData} from '../item-data';
 
-@Component({
-  selector: 'app-table-general',
-  templateUrl: './table-general.component.html',
-  styleUrls: ['./table-general.component.css']
-})
-export class TableGeneralComponent implements OnInit {
-  sheduleTab: any = [[]];
-  Chiffre = 1;
-  Quadrimestre: number;
-  nouveauTab = new Array<any>(11);
+  @Component({
+    selector: 'app-table-general',
+    templateUrl: './table-general.component.html',
+    styleUrls: ['./table-general.component.css']
+  })
+  export class TableGeneralComponent implements OnInit {
+    sheduleTab: any = [[]];
+    Chiffre = 1;
+    Quadrimestre: number;
+    nouveauTab = new Array<any>(11);
 
-  constructor(private msg: NzMessageService, private api: ApiService, private http: HttpClient) {
-  }
+    constructor(private msg: NzMessageService, private api: ApiService, private http: HttpClient) {
+    }
 
-  ngOnInit(): void {
-    this.api.getScheduleFromDB().subscribe(data => {
-      console.log(data);
-      this.sheduleTab = data;
-      const quadriTemp = 'Q' + this.sheduleTab[1][1].quadrimestre;
-      for (let i = 0; i < this.nouveauTab.length; i++) {
-        this.nouveauTab[i] = new Array(6);
-      }
-      this.nouveauTab[1][0] = '';
-      this.nouveauTab[0][1] = 'LUNDI';
-      this.nouveauTab[0][3] = 'MARDI';
-      this.nouveauTab[0][5] = 'MERCREDI';
-      this.nouveauTab[0][7] = 'JEUDI';
-      this.nouveauTab[0][9] = 'VENDREDI';
-      this.nouveauTab[1][1] = quadriTemp;
-      this.nouveauTab[1][3] = quadriTemp;
-      this.nouveauTab[1][5] = quadriTemp;
-      this.nouveauTab[1][7] = quadriTemp;
-      this.nouveauTab[1][9] = quadriTemp;
-      console.log(this.nouveauTab);
-      for (let i = 0; i < this.sheduleTab.length; i++) {
-        for (let j = 0; j < this.sheduleTab[i].length; j++) {
-          const cours = data[i][j].nom_cours;
-          const groupe = (data[i][j].groupe === 0) ? 'TOUS' : ((data[i][j].groupe === 1) ? 'Gr. 1' : 'Gr. 2');
-          const heureD = data[i][j].heure_debut;
-          const heureF = data[i][j].heure_fin;
-          const local = data[i][j].local;
-          const prof = data[i][j].nom_prof;
-          const jour = data[i][j].jour;
-          const quadrimestre = data[i][j].quadrimestre;
-          this.sheduleTab[i][j] = `${heureD} - ${heureF}  \n ${cours}  \n ${prof}  \n ${local} \n ${groupe}`;
-          this.nouveauTab[j + 2][(i * 2) + 1] = this.sheduleTab[i][j];
+    ngOnInit(): void {
+      this.api.getScheduleFromDB().subscribe(data => {
+
+        this.sheduleTab = data;
+        const quadriTemp = 'Q' + this.sheduleTab[1][1].quadrimestre;
+        for (let i = 0; i < this.nouveauTab.length; i++) {
+          this.nouveauTab[i] = new Array(12);
         }
-      }
+        this.nouveauTab[1][0] = '';
+        this.nouveauTab[0][1] = 'LUNDI';
+        this.nouveauTab[0][3] = 'MARDI';
+        this.nouveauTab[0][5] = 'MERCREDI';
+        this.nouveauTab[0][7] = 'JEUDI';
+        this.nouveauTab[0][9] = 'VENDREDI';
+        this.nouveauTab[1][1] = quadriTemp;
+        this.nouveauTab[1][3] = quadriTemp;
+        this.nouveauTab[1][5] = quadriTemp;
+        this.nouveauTab[1][7] = quadriTemp;
+        this.nouveauTab[1][9] = quadriTemp;
+
+        for (let i = 0; i < this.sheduleTab.length; i++) {
+          for (let j = 0; j < this.sheduleTab[i].length; j++) {
+
+            const cours = data[i][j].nom_cours;
+            const groupe = (data[i][j].groupe === 0) ? 'TOUS' : ((data[i][j].groupe === 1) ? 'Gr. 1' : 'Gr. 2');
+            const heureD = data[i][j].heure_debut;
+            const heureF = data[i][j].heure_fin;
+            const local = data[i][j].local;
+            const prof = data[i][j].nom_prof;
+            const jour = data[i][j].jour;
+            const quadrimestre = data[i][j].quadrimestre;
+
+
+            this.sheduleTab[i][j] = `${heureD} - ${heureF}  \n ${cours}  \n ${prof}  \n ${local} \n ${groupe}`;
+            this.nouveauTab[j + 2][(i * 2) + 1] = this.sheduleTab[i][j];
+
+        //       this.nouveauTab[j + 2][(i * 2) + 1] = " gola haazedaze haeaze haeazeeh eee ";
+
+          }
+        }
+
+
+
+        // split ne fonctionne pas dans la for
+        for (let j = 0; j < this.nouveauTab[0].length; j++)
+         {
+
+
+          for (let i = 0; i < this.nouveauTab.length; i++)
+           {
+                // extraction de l'heure de debut
+                var extractHeureDebutAvant = ""+this.nouveauTab[i][j];
+
+
+                if(extractHeureDebutAvant.length >9)
+                {
+
+                     var stringTemp = extractHeureDebutAvant.split('h');
+                     var heureDebuteAvant = stringTemp[0];
+
+                     // tri par selection
+                            var min = i;
+                            for(let n = i+1; n <  this.nouveauTab.length; n++){
+
+                             var  extractHeureDebutApres= ""+this.nouveauTab[n][j];
+                             var stringTempII = extractHeureDebutApres.split('h');
+                             var heureDebuteApres = stringTempII[0];
+
+
+                             if( heureDebuteApres < heureDebuteAvant){
+
+
+                              min = n;
+                             }
+
+                           }
+
+                           var tmp =  this.nouveauTab[i][j];
+                           this.nouveauTab[i][j] =  this.nouveauTab[min][j];
+                           this.nouveauTab[min][j] = tmp;
+
+
+
+                }
+
+            }
+           }
+
+
+        // alineacion de grupos
+         for (let j = 0; j < this.nouveauTab[0].length; j++)
+         {
+               for (let i = 0; i < this.nouveauTab.length-4; i++)
+                {
+
+                          var extractHeureDebutAvant = ""+this.nouveauTab[i][j];
+                          var extractHeureDebutApres = ""+this.nouveauTab[i+1][j];
+
+                            if(extractHeureDebutAvant.length> 9 && extractHeureDebutApres.length > 9)
+                            {
+                               var stringTemp = extractHeureDebutAvant.split('h');
+                               var stringTempII = extractHeureDebutApres.split('h');
+                               var heureDebuteAvant = stringTemp[0];
+                               var heureDebutApres = stringTempII[0];
+
+                               if(heureDebuteAvant== heureDebutApres)
+                               {
+
+                                  this.nouveauTab[i][j+1] =  this.nouveauTab[i+1][j]
+                                  this.nouveauTab[i+1][j] = "";
+                                   var line = i+1;
+
+                                  for (let n = line; n < this.nouveauTab.length-1; n++)
+                                  {
+                                     var temp = this.nouveauTab[n][j];
+                                     this.nouveauTab[n][j] = this.nouveauTab[n+1][j];
+                                     this.nouveauTab[n+1][j] = temp;
+                                  }
+
+                               }else {
+                                 // console.log(this.nouveauTab[i][j])
+                               }
+
+                            }
+
+
+
+                }
+           }
+
+
+
+
       this.sheduleTab = this.nouveauTab;
+
     });
   }
 
