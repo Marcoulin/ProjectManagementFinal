@@ -44,3 +44,21 @@
   </tr>
   </tbody>
 </nz-table>
+<div style="display: flex; justify-content: center;">
+  <button type="button" class="btn btn-success" (click)="showModal()">Valider</button>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Avertissements" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <div style="display: flex; align-items: baseline; ">
+    <i nz-icon nzType="warning" nzTheme="outline"></i>
+    <p>Le Cours de C# et le cours de Java 2 se chevauchent</p>
+  </div>
+  <div style="display: flex; flex; align-items: baseline;">
+    <i nz-icon nzType="warning" nzTheme="outline"></i>
+    <p>Le cours C# 2 est un préquis pour le cours C# 1 </p>
+  </div>
+  <div style="display: flex; align-items: baseline;">
+    <i nz-icon nzType="warning" nzTheme="outline"></i>
+    <p>Pas assez de crédit pris</p>
+  </div>
+
+</nz-modal>

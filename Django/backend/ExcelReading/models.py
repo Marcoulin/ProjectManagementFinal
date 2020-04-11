@@ -1,10 +1,27 @@
 from django.db import models
 
 
-class Movie(models.Model):
-    title = models.CharField(max_length=32)
-    desc = models.CharField(max_length=256)
-    year = models.IntegerField()
+class User(models.Model):
+    nom_user = models.CharField(max_length=200, unique=False)
+    level = models.IntegerField(null=False)
+    Nombre_credit = models.IntegerField(null=False)
+    adresse = models.CharField(max_length=200, null=False)
+    annee = models.IntegerField(null=False)
+
+
+class Ue(models.Model):
+    nom_ue = models.CharField(max_length=200, unique=True)
+    quadrimestre_ue = models.IntegerField(null=False)
+    nombre_credit_ue = models.IntegerField(null=False)
+    nombre_heure_ue = models.IntegerField(null=False)
+    id_users = models.ManyToManyField(User, related_name='User', blank=True, default=1)
+
+
+class Cours(models.Model):
+    cours = models.CharField(max_length=200, unique=True)
+    quadrimestre = models.IntegerField(null=False)
+    nombre_heure = models.IntegerField(null=False)
+    id_ue = models.ForeignKey(Ue, on_delete=models.CASCADE, null=True)
 
 
 class CoursT(models.Model):
@@ -16,13 +33,7 @@ class CoursT(models.Model):
     heure_fin = models.CharField(max_length=200)
     local = models.CharField(max_length=200)
     jour = models.CharField(max_length=200, null=True)
-
-
-class Cours(models.Model):
-    cours = models.CharField(max_length=200, unique=True)
-    quadrimestre = models.IntegerField(null=False)
-    nombre_credit = models.IntegerField(null=False)
-    nombre_heure = models.IntegerField(null=False)
+    id_cours = models.ForeignKey(Cours, on_delete=models.CASCADE, null=True)
 
 # def __str__(self):
 #  return self.nom_cours

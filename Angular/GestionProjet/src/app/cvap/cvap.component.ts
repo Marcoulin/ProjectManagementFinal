@@ -15,7 +15,10 @@ export class CVAPComponent implements OnInit {
   isIndeterminate = false;
   listOfDisplayData: ItemData[] = [];
   listOfAllData: any = [];
+
+
   mapOfCheckedId: { [key: string]: boolean } = {};
+  isVisible = false;
 
   constructor(private api: ApiService) {
   }
@@ -40,6 +43,18 @@ export class CVAPComponent implements OnInit {
     this.titre = 'Quadrimestre ' + this.Chiffre;
   }
 
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.isVisible = false;
+  }
+
+  handleCancel() {
+    this.isVisible = false;
+  }
 
   ButtonChange(leQuadri: number) {
     this.Chiffre = leQuadri;
@@ -51,4 +66,5 @@ export class CVAPComponent implements OnInit {
         console.log(this.listOfAllData);
       });
   }
+
 }

@@ -6,16 +6,11 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets
 
-from .models import Movie, Cours, CoursT
-from .serializers import MovieSerializer, CoursSerializer, CoursTSerializer
+from .models import Cours, CoursT
+from .serializers import CoursSerializer, CoursTSerializer
 
 
 # from tutorial.quickstart.serializers import UserSerializer
-
-
-class MovieViewSet(viewsets.ModelViewSet):
-    queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
 
 
 class CoursViewSet(viewsets.ModelViewSet):
@@ -27,7 +22,7 @@ class CoursViewSet(viewsets.ModelViewSet):
 def get_schedule(request):
     if request.method == 'GET':
         chaine = request.GET.get('query')
-        path = "C:/Users/remix/OneDrive/Bureau/Horaire/"
+        path = "C:/Users/Amarl/Documents/"
         wb = xlrd.open_workbook(path + chaine)
         sheet = wb.sheet_by_index(0)
         matrix = [[sheet.cell_value(y, x) for x in range(sheet.ncols)] for y in range(sheet.nrows)]
