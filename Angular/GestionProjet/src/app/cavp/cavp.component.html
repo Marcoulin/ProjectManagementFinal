@@ -1,0 +1,56 @@
+<nz-table #nzTable nzBordered [nzData]="dataList">
+  <thead>
+  <!--
+  <tr>
+    <th nzShowExpand></th>
+    <th colspan="4">Quadrimestre 1</th>
+  </tr>
+  <tr>
+    <th nzShowExpand></th>
+    <th>ECTS</th>
+    <th>Nom de l'unité de l'enseignement</th>
+    <th>Total des heures</th>
+    <th></th>
+  </tr>-->
+  <tr>
+    <th colspan = "5">Programme de la formation informatique de gestion</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <ng-template ngFor let-data [ngForOf]="nzTable.data">
+    <tr>
+      <td nzShowExpand [(nzExpand)]="mapOfExpandData[data.id]"></td>
+      <td colspan = 4>{{data.Quadrimestre}}</td>
+    </tr>
+    <tr [nzExpand] = mapOfExpandData[data.id]>
+      <td></td>
+      <td>ECTS</td>
+      <td>Nom de l'unité de l'enseignement</td>
+      <td colspan="2">Total des heures</td>
+    </tr>
+    <tr *ngFor="let val of data.matieres" [nzExpand] = mapOfExpandData[data.id] >
+      <td nzShowExpand [(nzExpand)]="mapOfExpandData2[data.id]"></td>
+      <td>{{val.ects}}</td>
+      <td>{{val.ue}}</td>
+      <td>{{val.totalHours}}</td>
+      <td><label nz-checkbox></label></td>
+    </tr>
+    <tr *ngFor = "let value of data.activity" [nzExpand] = mapOfExpandData2[data.id]>
+      <td></td>
+      <td colspan="3">{{value.aa}}</td>
+      <td colspan="1">{{value.hours}}</td>
+    </tr>
+    <!--<tr [nzExpand]="mapOfExpandData[data.id]">
+      <td></td>
+      <td colspan="4">{{data.aa}}</td>-->
+  </ng-template>
+  </tbody>
+</nz-table>
+
+
+
+
+
+
+

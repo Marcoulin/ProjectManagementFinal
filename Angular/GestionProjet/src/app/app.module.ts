@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
-import {NzIconModule, NzToolTipModule, NgZorroAntdModule, NZ_I18N, fr_BE} from "ng-zorro-antd";
+import {NzIconModule, NzToolTipModule, NgZorroAntdModule, NZ_I18N, fr_BE} from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,8 +17,9 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { CVAPComponent } from './cvap/cvap.component';
 import { TableHoraireComponent } from './table-horaire/table-horaire.component';
 import { HELBComponent } from './helb/helb.component';
-import {ApiService} from "./Services/api.service";
+import {ApiService} from './Services/api.service';
 import { TableGeneralComponent } from './table-general/table-general.component';
+import { CavpComponent} from './cavp/cavp.component';
 
 registerLocaleData(fr);
 
@@ -26,7 +27,7 @@ const appRoutes: Routes = [
 
   { path: 'Profile', component: ProfileComponent },
   { path: 'HELB', component: HELBComponent },
-  { path: 'CVAP', component: CVAPComponent },
+  { path: 'CVAP', component: CavpComponent },
   { path: '', component: ProfileComponent }
 ];
 
@@ -35,10 +36,11 @@ const appRoutes: Routes = [
     AppComponent,
     ProfileComponent,
     NavbarComponent,
-    CVAPComponent,
+    CavpComponent,
     TableHoraireComponent,
     HELBComponent,
-    TableGeneralComponent
+    TableGeneralComponent,
+    CVAPComponent
   ],
   imports: [
     BrowserModule,

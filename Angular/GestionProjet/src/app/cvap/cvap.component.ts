@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {ItemData} from '../item-data';
 import {ApiService} from '../Services/api.service';
 
+
 @Component({
-  selector: 'app-cvap',
   templateUrl: './cvap.component.html',
   styleUrls: ['./cvap.component.css']
 })
 export class CVAPComponent implements OnInit {
+
   Chiffre = 1;
   titre = 'Quadrimestre';
   isAllDisplayDataChecked = false;

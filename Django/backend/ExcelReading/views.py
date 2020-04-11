@@ -27,7 +27,7 @@ class CoursViewSet(viewsets.ModelViewSet):
 def get_schedule(request):
     if request.method == 'GET':
         chaine = request.GET.get('query')
-        path = "C:/Users/Sofian/Desktop/"
+        path = "C:/Users/remix/OneDrive/Bureau/Horaire/"
         wb = xlrd.open_workbook(path + chaine)
         sheet = wb.sheet_by_index(0)
         matrix = [[sheet.cell_value(y, x) for x in range(sheet.ncols)] for y in range(sheet.nrows)]
