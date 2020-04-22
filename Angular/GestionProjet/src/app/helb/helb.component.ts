@@ -9,8 +9,7 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./helb.component.css']
 })
 export class HELBComponent implements OnInit {
-
-  sheduleTab: any = [[]];
+  quadriFromTheClick = 2;
 
   constructor(private msg: NzMessageService, private api: ApiService, private http: HttpClient) {
   }
@@ -27,6 +26,10 @@ export class HELBComponent implements OnInit {
       }
 
       */
+  }
+
+  ButtonChange(leQuadri: number) {
+    this.quadriFromTheClick = leQuadri;
   }
 
 // remplissage du tableau apres le depot

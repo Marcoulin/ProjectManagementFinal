@@ -1,2 +1,19 @@
-<app-table-general></app-table-general>
-
+<div class="margin-title">
+  <div class="bg-title">
+    <h3 style="color:white; margin:0px;">Horaire Général : </h3>
+  </div>
+</div>
+<div style="display: flex; margin-top: 20px">
+  <div class="btn-group" style="width: 100%">
+    <button (click)="ButtonChange(1)" class="btn btn-primary btn-block" style="margin-top: 8px" type="button">1</button>
+    <button (click)="ButtonChange(2)" class="btn btn-secondary btn-block" type="button">2</button>
+    <button (click)="ButtonChange(3)" class="btn btn-success btn-block" type="button">3</button>
+    <button (click)="ButtonChange(4)" class="btn btn-danger btn-block" type="button">4</button>
+    <button (click)="ButtonChange(5)" class="btn btn-warning btn-block" type="button">5</button>
+  </div>
+</div>
+<app-table-general [quadriFromClick]="quadriFromTheClick" ></app-table-general>
+<div style="display: flex; flex-direction: column; background-color: #636e72; color: white; text-align: center">
+  <p>Communication : Madame Nathalie Delande </p>
+  <p>Adresse mail: nathalie.delande@helb-prigogine.be </p>
+</div>

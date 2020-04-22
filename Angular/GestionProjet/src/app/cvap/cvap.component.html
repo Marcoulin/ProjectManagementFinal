@@ -1,12 +1,4 @@
-<div style="display: flex; margin-top: 20px">
-  <div class="btn-group" style="width: 100%">
-    <button (click)="ButtonChange(1)" class="btn btn-primary btn-block" style="margin-top: 8px" type="button">1</button>
-    <button (click)="ButtonChange(2)" class="btn btn-secondary btn-block" type="button">2</button>
-    <button (click)="ButtonChange(3)" class="btn btn-success btn-block" type="button">3</button>
-    <button (click)="ButtonChange(4)" class="btn btn-danger btn-block" type="button">4</button>
-    <button (click)="ButtonChange(5)" class="btn btn-warning btn-block" type="button">5</button>
-  </div>
-</div>
+
 <nz-table
   #rowSelectionTable
   [nzData]="listOfAllData"
@@ -44,21 +36,4 @@
   </tr>
   </tbody>
 </nz-table>
-<div style="display: flex; justify-content: center;">
-  <button type="button" class="btn btn-success" (click)="showModal()">Valider</button>
-</div>
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Avertissements" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-  <div style="display: flex; align-items: baseline; ">
-    <i nz-icon nzType="warning" nzTheme="outline"></i>
-    <p>Le Cours de C# et le cours de Java 2 se chevauchent</p>
-  </div>
-  <div style="display: flex; flex; align-items: baseline;">
-    <i nz-icon nzType="warning" nzTheme="outline"></i>
-    <p>Le cours C# 2 est un préquis pour le cours C# 1 </p>
-  </div>
-  <div style="display: flex; align-items: baseline;">
-    <i nz-icon nzType="warning" nzTheme="outline"></i>
-    <p>Pas assez de crédit pris</p>
-  </div>
 
-</nz-modal>

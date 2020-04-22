@@ -27,7 +27,15 @@ export class ApiService {
     return this.http.get(this.baseUrl + `DeleteAllCourses/?quadri=${quadri}`).subscribe();
   }
 
-  getScheduleFromDB() {
-    return this.http.get(this.baseUrl + `GetScheduleFromDB/`);
+  getScheduleFromDB(quadriFromClick: number) {
+    return this.http.get(this.baseUrl + `GetScheduleFromDB/?quadri=${quadriFromClick}`);
+  }
+
+  getUeFromDB() {
+    return this.http.get(this.baseUrl + `GetAllUe/`);
+  }
+
+  checkCoursesOverlap(checkTab: string[]) {
+    return this.http.post(this.baseUrl + `OverlapCheck/`, checkTab);
   }
 }

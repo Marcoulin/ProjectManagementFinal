@@ -1,154 +1,147 @@
-import {Component, OnInit} from '@angular/core';
-  import {NzMessageService, UploadFile} from 'ng-zorro-antd';
-  import {ApiService} from '../Services/api.service';
-  import {HttpClient} from '@angular/common/http';
-  import {ItemData} from '../item-data';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {NzMessageService, UploadFile} from 'ng-zorro-antd';
+import {ApiService} from '../Services/api.service';
+import {HttpClient} from '@angular/common/http';
+import {ItemData} from '../item-data';
 
-  @Component({
-    selector: 'app-table-general',
-    templateUrl: './table-general.component.html',
-    styleUrls: ['./table-general.component.css']
-  })
-  export class TableGeneralComponent implements OnInit {
-    sheduleTab: any = [[]];
-    Chiffre = 1;
-    Quadrimestre: number;
-    nouveauTab = new Array<any>(11);
+@Component({
+  selector: 'app-table-general',
+  templateUrl: './table-general.component.html',
+  styleUrls: ['./table-general.component.css']
+})
+export class TableGeneralComponent implements OnInit, OnChanges {
+  sheduleTab: any = [[]];
+  Chiffre = 1;
+  Quadrimestre: number;
+  nouveauTab = new Array<any>(11);
+  @Input() quadriFromClick;
 
-    constructor(private msg: NzMessageService, private api: ApiService, private http: HttpClient) {
-    }
+  constructor(private msg: NzMessageService, private api: ApiService, private http: HttpClient) {
+  }
 
-    ngOnInit(): void {
-      this.api.getScheduleFromDB().subscribe(data => {
 
-        this.sheduleTab = data;
-        const quadriTemp = 'Q' + this.sheduleTab[1][1].quadrimestre;
+  ngOnInit(): void {
+    this.extracted(this.quadriFromClick);
+  }
+
+  private extracted(quadrii: number) {
+    this.api.getScheduleFromDB(quadrii).subscribe(data => {
+      console.log(data);
+      this.sheduleTab = data;
+      const quadriTemp = 'Q' + this.sheduleTab[1][1].quadrimestre;
+      for (let i = 0; i < this.nouveauTab.length; i++) {
+        this.nouveauTab[i] = new Array(12);
+      }
+      this.nouveauTab[1][0] = '';
+      this.nouveauTab[0][1] = 'LUNDI';
+      this.nouveauTab[0][3] = 'MARDI';
+      this.nouveauTab[0][5] = 'MERCREDI';
+      this.nouveauTab[0][7] = 'JEUDI';
+      this.nouveauTab[0][9] = 'VENDREDI';
+      this.nouveauTab[1][1] = quadriTemp;
+      this.nouveauTab[1][3] = quadriTemp;
+      this.nouveauTab[1][5] = quadriTemp;
+      this.nouveauTab[1][7] = quadriTemp;
+      this.nouveauTab[1][9] = quadriTemp;
+
+      for (let i = 0; i < this.sheduleTab.length; i++) {
+        for (let j = 0; j < this.sheduleTab[i].length; j++) {
+
+          const cours = data[i][j].nom_cours;
+          const groupe = (data[i][j].groupe === 0) ? 'TOUS' : ((data[i][j].groupe === 1) ? 'Gr. 1' : 'Gr. 2');
+          const heureD = data[i][j].heure_debut;
+          const heureF = data[i][j].heure_fin;
+          const local = data[i][j].local;
+          const prof = data[i][j].nom_prof;
+          const jour = data[i][j].jour;
+          const quadrimestre = data[i][j].quadrimestre;
+
+
+          this.sheduleTab[i][j] = `${heureD} - ${heureF}  \n ${cours}  \n ${prof}  \n ${local} \n ${groupe}`;
+          this.nouveauTab[j + 2][(i * 2) + 1] = this.sheduleTab[i][j];
+
+          //       this.nouveauTab[j + 2][(i * 2) + 1] = " gola haazedaze haeaze haeazeeh eee ";
+
+        }
+      }
+
+
+      // split ne fonctionne pas dans la for
+      for (let j = 0; j < this.nouveauTab[0].length; j++) {
+
+
         for (let i = 0; i < this.nouveauTab.length; i++) {
-          this.nouveauTab[i] = new Array(12);
-        }
-        this.nouveauTab[1][0] = '';
-        this.nouveauTab[0][1] = 'LUNDI';
-        this.nouveauTab[0][3] = 'MARDI';
-        this.nouveauTab[0][5] = 'MERCREDI';
-        this.nouveauTab[0][7] = 'JEUDI';
-        this.nouveauTab[0][9] = 'VENDREDI';
-        this.nouveauTab[1][1] = quadriTemp;
-        this.nouveauTab[1][3] = quadriTemp;
-        this.nouveauTab[1][5] = quadriTemp;
-        this.nouveauTab[1][7] = quadriTemp;
-        this.nouveauTab[1][9] = quadriTemp;
-
-        for (let i = 0; i < this.sheduleTab.length; i++) {
-          for (let j = 0; j < this.sheduleTab[i].length; j++) {
-
-            const cours = data[i][j].nom_cours;
-            const groupe = (data[i][j].groupe === 0) ? 'TOUS' : ((data[i][j].groupe === 1) ? 'Gr. 1' : 'Gr. 2');
-            const heureD = data[i][j].heure_debut;
-            const heureF = data[i][j].heure_fin;
-            const local = data[i][j].local;
-            const prof = data[i][j].nom_prof;
-            const jour = data[i][j].jour;
-            const quadrimestre = data[i][j].quadrimestre;
+          // extraction de l'heure de debut
+          const extractHeureDebutAvant = '' + this.nouveauTab[i][j];
 
 
-            this.sheduleTab[i][j] = `${heureD} - ${heureF}  \n ${cours}  \n ${prof}  \n ${local} \n ${groupe}`;
-            this.nouveauTab[j + 2][(i * 2) + 1] = this.sheduleTab[i][j];
+          if (extractHeureDebutAvant.length > 9) {
 
-        //       this.nouveauTab[j + 2][(i * 2) + 1] = " gola haazedaze haeaze haeazeeh eee ";
+            const stringTemp = extractHeureDebutAvant.split('h');
+            const heureDebuteAvant = stringTemp[0];
 
-          }
-        }
+            // tri par selection
+            let min = i;
+            for (let n = i + 1; n < this.nouveauTab.length; n++) {
 
-
-
-        // split ne fonctionne pas dans la for
-        for (let j = 0; j < this.nouveauTab[0].length; j++)
-         {
-
-
-          for (let i = 0; i < this.nouveauTab.length; i++)
-           {
-                // extraction de l'heure de debut
-                var extractHeureDebutAvant = ""+this.nouveauTab[i][j];
+              const extractHeureDebutApres = '' + this.nouveauTab[n][j];
+              const stringTempII = extractHeureDebutApres.split('h');
+              const heureDebuteApres = stringTempII[0];
 
 
-                if(extractHeureDebutAvant.length >9)
-                {
-
-                     var stringTemp = extractHeureDebutAvant.split('h');
-                     var heureDebuteAvant = stringTemp[0];
-
-                     // tri par selection
-                            var min = i;
-                            for(let n = i+1; n <  this.nouveauTab.length; n++){
-
-                             var  extractHeureDebutApres= ""+this.nouveauTab[n][j];
-                             var stringTempII = extractHeureDebutApres.split('h');
-                             var heureDebuteApres = stringTempII[0];
+              if (heureDebuteApres < heureDebuteAvant) {
 
 
-                             if( heureDebuteApres < heureDebuteAvant){
-
-
-                              min = n;
-                             }
-
-                           }
-
-                           var tmp =  this.nouveauTab[i][j];
-                           this.nouveauTab[i][j] =  this.nouveauTab[min][j];
-                           this.nouveauTab[min][j] = tmp;
-
-
-
-                }
+                min = n;
+              }
 
             }
-           }
+
+            const tmp = this.nouveauTab[i][j];
+            this.nouveauTab[i][j] = this.nouveauTab[min][j];
+            this.nouveauTab[min][j] = tmp;
 
 
-        // alineacion de grupos
-         for (let j = 0; j < this.nouveauTab[0].length; j++)
-         {
-               for (let i = 0; i < this.nouveauTab.length-4; i++)
-                {
+          }
 
-                          var extractHeureDebutAvant = ""+this.nouveauTab[i][j];
-                          var extractHeureDebutApres = ""+this.nouveauTab[i+1][j];
-
-                            if(extractHeureDebutAvant.length> 9 && extractHeureDebutApres.length > 9)
-                            {
-                               var stringTemp = extractHeureDebutAvant.split('h');
-                               var stringTempII = extractHeureDebutApres.split('h');
-                               var heureDebuteAvant = stringTemp[0];
-                               var heureDebutApres = stringTempII[0];
-
-                               if(heureDebuteAvant== heureDebutApres)
-                               {
-
-                                  this.nouveauTab[i][j+1] =  this.nouveauTab[i+1][j]
-                                  this.nouveauTab[i+1][j] = "";
-                                   var line = i+1;
-
-                                  for (let n = line; n < this.nouveauTab.length-1; n++)
-                                  {
-                                     var temp = this.nouveauTab[n][j];
-                                     this.nouveauTab[n][j] = this.nouveauTab[n+1][j];
-                                     this.nouveauTab[n+1][j] = temp;
-                                  }
-
-                               }else {
-                                 // console.log(this.nouveauTab[i][j])
-                               }
-
-                            }
+        }
+      }
 
 
+      // alineacion de grupos
+      for (let j = 0; j < this.nouveauTab[0].length; j++) {
+        for (let i = 0; i < this.nouveauTab.length - 4; i++) {
 
-                }
-           }
+          const extractHeureDebutAvant = '' + this.nouveauTab[i][j];
+          const extractHeureDebutApres = '' + this.nouveauTab[i + 1][j];
+
+          if (extractHeureDebutAvant.length > 9 && extractHeureDebutApres.length > 9) {
+            const stringTemp = extractHeureDebutAvant.split('h');
+            const stringTempII = extractHeureDebutApres.split('h');
+            const heureDebuteAvant = stringTemp[0];
+            const heureDebutApres = stringTempII[0];
+
+            if (heureDebuteAvant == heureDebutApres) {
+
+              this.nouveauTab[i][j + 1] = this.nouveauTab[i + 1][j];
+              this.nouveauTab[i + 1][j] = '';
+              const line = i + 1;
+
+              for (let n = line; n < this.nouveauTab.length - 1; n++) {
+                const temp = this.nouveauTab[n][j];
+                this.nouveauTab[n][j] = this.nouveauTab[n + 1][j];
+                this.nouveauTab[n + 1][j] = temp;
+              }
+
+            } else {
+              // console.log(this.nouveauTab[i][j])
+            }
+
+          }
 
 
+        }
+      }
 
 
       this.sheduleTab = this.nouveauTab;
@@ -194,6 +187,7 @@ import {Component, OnInit} from '@angular/core';
               // console.log(' heure de debut = ' + stringHeureDebut + ' heure de fin ' + stringHeureFin);
               //    Extraire le nom du cours
               let nomCours = this.recombinerSplit(temp);
+              console.log(temp);
               const jour = (this.sheduleTab[0][j] === '') ? this.sheduleTab[0][j - 1] : this.sheduleTab[0][j];
               const tabInfo = nomCours.split('•');
               const nomClasse = tabInfo[1]; //  TO USE
@@ -201,9 +195,10 @@ import {Component, OnInit} from '@angular/core';
               const groupe = (stringHeure.includes('Gr. 1')) ? 1 : ((stringHeure.includes('Gr. 2')) ? 2 : 0);
               const stringO = tabInfo[0];
               const iteration = this.catchFirstMajLetter(stringO);
-              const nomProf = stringO.substring(iteration, stringO.length - 1); //  TO USE
+              const nomProf = stringO.substring(iteration, stringO.length - 1); //  TO
               nomCours = stringO.substring(1, iteration - 1); //  TO USE
-              console.log(`le cours ${nomCours} se déroule le ${jour}`);
+              const foreignKey = this.assosiationCours(nomCours);
+              //console.log(`le cours ${nomCours} se déroule le ${jour}`);
               // console.log(`voici le nom du cours ${nomCours} et voici son groupe ${groupe}`);
               // console.log(' le nom du prof = ' + nomProf + ' le nom du cours = ' + nomCours);
               const CoursT = {
@@ -214,8 +209,10 @@ import {Component, OnInit} from '@angular/core';
                 stringHeureDebut,
                 stringHeureFin,
                 quadrimestre: this.Quadrimestre,
-                jour
+                jour,
+                foreignKey
               };
+              //console.log(CoursT);
               this.api.recordCourse(CoursT);
               for (let m = i; m < i + nbFoisrepeter; m++) {
                 this.sheduleTab[m][j] = nomCours + ' ' + nomProf + ' ' + nomGroupeSemaine + ' ' + nomClasse;
@@ -264,6 +261,78 @@ import {Component, OnInit} from '@angular/core';
 
   hasWhiteSpace(s) {
     return s.indexOf(' ') >= 0;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //console.log(changes['quadriFromClick'].currentValue);
+    this.quadriFromClick = changes['quadriFromClick'].currentValue;
+    this.extracted(this.quadriFromClick);
+
+  }
+
+  private assosiationCours(nomCours): string {
+    switch (nomCours) {
+      case "Stat et appl en tableur (téorie)":
+        return "Statistique et application en tableur";
+      case  "Mats appl. à la prog. II":
+        return "Mathématiques appliquées à la programmation 2";
+      case "Mats appl.à la prog. II":
+        return "Mathématiques appliquées à la programmation 2";
+      case  "Stat et appl en tableur":
+        return "Statistique et application en tableur";
+      case  "Professional Englis II":
+        return "Professional English 2";
+      case  "Plateforme .net (C#,…) IBen":
+        return "Plateforme .net (C#,…) I";
+      case  "Tec et prat de prés orale et écrite de projets":
+        return "Techniques et pratiques de présentation orale et écrite de projets";
+      case  "Progr. Web I ":
+        return "Programmation web 1";
+      case  "Plat .net (C#,…) I":
+        return "Plateforme .net (C#,…) I";
+      case  "Program-mation Web I":
+        return "Programmation web 1";
+      case  "Projet .netBen":
+        return "Projet .net";
+      case  "Dév mobile I":
+        return "Développement mobile 1";
+      case  "OS II":
+        return "Systèmes d'exploitation 2";
+      case  "Gestion de conflits":
+        return "Pratique de la gestion de conflits";
+      case  "Analyse (Merise, UML) II\nBen":
+        return "Analyse (Merise, UML) 2";
+      case  "Plateforme .net (C#,…) III\nVan":
+        return "Plateforme .net (C#,…) III";
+      case  "Business Englis":
+        return "Business English";
+      case  "Java III":
+        return "Java 3";
+      case  "BD II\nBen":
+        return "Base de données 2";
+      case "DB II \nBen":
+        return "Base de données 2";
+      case  "DB II\nBen":
+        return "Base de données 2";
+      case "Com prof appl aux projets":
+        return "Communication professionnelle appliquée aux projets";
+      case "Projets & intro à la gestion de projets & com appl. Aux projets\nTapfu, Flament,":
+        return "Projets";
+      case "Projet .net\nBen":
+        return "Projet .net";
+      case "Plateforme .net (C#,…) I\nBen":
+        return "Plateforme .net (C#,…) I";
+      case "SAR: anglais\nSur demande préalable":
+        return "SAR: anglais";
+      case "SAR: Remédiation en français\nSur demande préalable":
+        return "SAR: Remédiation en français";
+      case "Mats appl. à la progr. II":
+        return "Mathématiques appliquées à la programmation 2";
+      case "SAR: Programmation\nSur demande préalable":
+        return "SAR: programmation";
+      default:
+        return nomCours;
+    }
   }
 
 }
