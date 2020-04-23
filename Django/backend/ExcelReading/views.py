@@ -9,8 +9,10 @@ from rest_framework import viewsets
 from .models import Cours, CoursT
 from .serializers import CoursSerializer, CoursTSerializer
 
-
-# from tutorial.quickstart.serializers import UserSerializer
+from django.contrib.auth.models import User
+from backend.ExcelReading.serializers import UserSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 class CoursViewSet(viewsets.ModelViewSet):
@@ -67,3 +69,11 @@ def getScheduleFromDB(request):
     doublematrix = [CoursTSerializer(matrix[x], many=True).data for x in range(len(matrix))]
     json.dumps(doublematrix)
     return JsonResponse(doublematrix, safe=False)
+
+
+#Authentication
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)

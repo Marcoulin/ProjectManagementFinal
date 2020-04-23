@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import {NzIconModule, NzToolTipModule, NgZorroAntdModule, NZ_I18N, fr_BE} from 'ng-zorro-antd';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
@@ -20,6 +20,8 @@ import { HELBComponent } from './helb/helb.component';
 import {ApiService} from './Services/api.service';
 import { TableGeneralComponent } from './table-general/table-general.component';
 import { CavpComponent} from './cavp/cavp.component';
+import {RegisterComponent} from './register/register.component';
+import { ConnexionComponent } from './connexion/connexion.component';
 
 registerLocaleData(fr);
 
@@ -28,7 +30,8 @@ const appRoutes: Routes = [
   { path: 'Profile', component: ProfileComponent },
   { path: 'HELB', component: HELBComponent },
   { path: 'CVAP', component: CavpComponent },
-  { path: '', component: ProfileComponent }
+  { path: 'Inscription', component: RegisterComponent },
+  { path: '', component: ConnexionComponent}
 ];
 
 @NgModule({
@@ -40,7 +43,9 @@ const appRoutes: Routes = [
     TableHoraireComponent,
     HELBComponent,
     TableGeneralComponent,
-    CVAPComponent
+    CVAPComponent,
+    RegisterComponent,
+    ConnexionComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     NzTableModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [ApiService,{ provide: NZ_I18N, useValue: fr_BE }],
   bootstrap: [AppComponent]
