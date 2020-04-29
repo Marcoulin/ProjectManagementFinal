@@ -1,0 +1,31 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+<nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nickname" nzRequired>
+          <span>
+            Nickname
+            <i nz-icon nz-tooltip nzTitle="What do you want other to call you" nzType="question-circle" nzTheme="outline"></i>
+          </span>
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your nickname!">
+      <input nz-input id="nickname" formControlName="nickname" [(ngModel)]="connect.username"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
+      <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()" [(ngModel)]="connect.password"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="connect-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" (click)="connectUser()">Connect</button>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="sign-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" (click)="signIn()">Inscription</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+
