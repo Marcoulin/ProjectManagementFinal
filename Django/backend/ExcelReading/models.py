@@ -10,15 +10,14 @@ class User(models.Model):
 
 
 class Ue(models.Model):
-    nom_ue = models.CharField(max_length=200, unique=True)
+    nom_ue = models.CharField(max_length=200, unique=True, primary_key=True)
     quadrimestre_ue = models.IntegerField(null=False)
     nombre_credit_ue = models.IntegerField(null=False)
     nombre_heure_ue = models.IntegerField(null=False)
-    id_users = models.ManyToManyField(User, related_name='User', blank=True, default=1)
 
 
 class Cours(models.Model):
-    cours = models.CharField(max_length=200, unique=True)
+    cours = models.CharField(max_length=200, unique=True, primary_key=True)
     quadrimestre = models.IntegerField(null=False)
     nombre_heure = models.IntegerField(null=False)
     id_ue = models.ForeignKey(Ue, on_delete=models.CASCADE, null=True)

@@ -1,18 +1,17 @@
 import json
 
 import xlrd
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 # from rest_framework.parsers import JSONParser parse tout ce qui rentre comme étant du json
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets
-
-from .models import Cours, CoursT
-from .serializers import CoursSerializer, CoursTSerializer
-
-from django.contrib.auth.models import User
-from backend.ExcelReading.serializers import UserSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+
+from backend.ExcelReading.serializers import UserSerializer, UeSerializer
+from .models import Cours, CoursT, Ue
+from .serializers import CoursSerializer, CoursTSerializer
 
 
 class CoursViewSet(viewsets.ModelViewSet):
@@ -71,7 +70,31 @@ def getScheduleFromDB(request):
     return JsonResponse(doublematrix, safe=False)
 
 
-#Authentication
+@csrf_exempt
+def getAllUe(request):
+    queryQuadriOne = Ue.objects.all().filter(quadrimestre_ue=1)
+    queryQuadriTwo = Ue.objects.all().filter(quadrimestre_ue=2)
+    queryQuadriThree = Ue.objects.all().filter(quadrimestre_ue=3)
+    queryQuadriFour = Ue.objects.all().filter(quadrimestre_ue=4)
+    queryQuadriFive = Ue.objects.all().filter(quadrimestre_ue=5)
+    matrix = [queryQuadriOne, queryQuadriTwo, queryQuadriThree, queryQuadriFour, queryQuadriFive]
+    doublematrix = [UeSerializer(matrix[x], many=True).data for x in range(len(matrix))]
+    json.dumps(doublematrix)
+    return JsonResponse(doublematrix, safe=False)
+
+
+@csrf_exempt
+def overLapCheck(request):
+    print(request.body.decode('utf-8'))
+    body_request = request.body.decode('utf-8')
+    body = json.loads(body_request)
+    print(body)
+    # query = Cours.objects.all().filter(id_ue=)
+
+    return JsonResponse("", safe=False)
+
+
+# Authentication
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer

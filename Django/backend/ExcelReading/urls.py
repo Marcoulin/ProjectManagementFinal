@@ -1,14 +1,13 @@
-from django.urls import path
 from django.conf.urls import url, include
+from django.urls import path
 from rest_framework import routers
 from rest_framework.authtoken.views import ObtainAuthToken
+
 from backend.ExcelReading import views
 from backend.ExcelReading.views import *
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
-
-
 
 urlpatterns = [
     url(r'^', include(router.urls)),
@@ -19,7 +18,7 @@ urlpatterns = [
     path(r'RecordCourse/', recordCourse, name="scheduleGot"),
     path(r'DeleteAllCourses/', DeleteAllCourse, name="scheduleGot"),
     path(r'GetScheduleFromDB/', getScheduleFromDB, name="scheduleGot"),
+    path(r'GetAllUe/', getAllUe, name="scheduleGot"),
+    path(r'OverlapCheck/', overLapCheck, name="scheduleGot")
 
 ]
-
-
