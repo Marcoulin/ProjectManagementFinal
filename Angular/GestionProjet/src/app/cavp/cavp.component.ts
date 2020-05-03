@@ -77,6 +77,7 @@ export class CavpComponent implements OnInit {
 
   log($event: string[]) {
     this.checkedTab = $event;
+    console.log(this.checkedTab)
   }
 
   private isHoursOverLaping(stringElement: string, stringElement1: string, stringElement2: string, stringElement3: string): boolean {

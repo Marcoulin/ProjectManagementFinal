@@ -1,5 +1,5 @@
-from rest_framework import serializers
 from django.contrib.auth.models import User
+from rest_framework import serializers
 
 from .models import CoursT, Cours, Ue
 
@@ -13,13 +13,13 @@ class CoursTSerializer(serializers.ModelSerializer):
 class CoursSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cours
-        fields = ('id', 'cours', 'quadrimestre', 'nombre_heure', 'nombre_credit')
+        fields = ('cours', 'quadrimestre', 'nombre_heure', 'nombre_credit', 'id_ue')
 
 
 class UeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ue
-        fields = ('id', 'nom_ue', 'quadrimestre_ue', 'nombre_heure_ue', 'nombre_credit_ue')
+        fields = ('nom_ue', 'quadrimestre_ue', 'nombre_heure_ue', 'nombre_credit_ue')
 
 
 # User Authentication
@@ -32,6 +32,3 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
-
-
-
