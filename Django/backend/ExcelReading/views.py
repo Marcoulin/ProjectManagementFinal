@@ -6,8 +6,6 @@ from django.http import HttpResponse, JsonResponse
 # from rest_framework.parsers import JSONParser parse tout ce qui rentre comme étant du json
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
 
 from backend.ExcelReading.serializers import UserSerializer, UeSerializer
 from .models import Cours, CoursT, Ue
@@ -85,18 +83,28 @@ def getAllUe(request):
 
 @csrf_exempt
 def overLapCheck(request):
-    print(request.body.decode('utf-8'))
     body_request = request.body.decode('utf-8')
     body = json.loads(body_request)
+    everythingCourseT = []
     print(body)
-    # query = Cours.objects.all().filter(id_ue=)
-
-    return JsonResponse("", safe=False)
+    for x in range(len(body)):
+        UeObject = Ue.objects.get(nom_ue=body[x])
+        allCourses = Cours.objects.all().filter(id_ue=UeObject)
+        everythingCourse = CoursSerializer(allCourses, many=True).data
+        print(everythingCourse)
+        for y in range(len(everythingCourse)):
+            coucou = everythingCourse[0]['cours']
+            print(coucou)
+            CoursObject = Cours.objects.get(cours=everythingCourse[0]["cours"])
+            allCoursesT = CoursT.objects.all().filter(id_cours=CoursObject)
+            everythingCourseT += CoursTSerializer(allCoursesT, many=True).data
+            print(everythingCourseT)
+    return JsonResponse(everythingCourseT, safe=False)
 
 
 # Authentication
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)

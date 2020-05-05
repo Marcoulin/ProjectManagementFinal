@@ -13,7 +13,7 @@ class CoursTSerializer(serializers.ModelSerializer):
 class CoursSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cours
-        fields = ('cours', 'quadrimestre', 'nombre_heure', 'nombre_credit', 'id_ue')
+        fields = ('cours', 'quadrimestre', 'nombre_heure', 'id_ue')
 
 
 class UeSerializer(serializers.ModelSerializer):
