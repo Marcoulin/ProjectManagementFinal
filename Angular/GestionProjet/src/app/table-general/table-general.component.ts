@@ -27,7 +27,7 @@ export class TableGeneralComponent implements OnInit, OnChanges {
   private extracted(quadrii: number) {
     this.api.getScheduleFromDB(quadrii).subscribe(data => {
       console.log(data);
-      this.sheduleTab = data;
+      this.sheduleTab = data
       const quadriTemp = 'Q' + this.sheduleTab[1][1].quadrimestre;
       for (let i = 0; i < this.nouveauTab.length; i++) {
         this.nouveauTab[i] = new Array(12);
@@ -198,8 +198,6 @@ export class TableGeneralComponent implements OnInit, OnChanges {
               const nomProf = stringO.substring(iteration, stringO.length - 1); //  TO
               nomCours = stringO.substring(1, iteration - 1); //  TO USE
               const foreignKey = this.assosiationCours(nomCours);
-              console.log("ici");
-              console.log(foreignKey);
               //console.log(`le cours ${nomCours} se déroule le ${jour}`);
               // console.log(`voici le nom du cours ${nomCours} et voici son groupe ${groupe}`);
               // console.log(' le nom du prof = ' + nomProf + ' le nom du cours = ' + nomCours);
@@ -268,6 +266,8 @@ export class TableGeneralComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     //console.log(changes['quadriFromClick'].currentValue);
     this.quadriFromClick = changes['quadriFromClick'].currentValue;
+    console.log(this.quadriFromClick);
+    this.sheduleTab = [[]];
     this.extracted(this.quadriFromClick);
 
   }
