@@ -38,13 +38,17 @@ def all_courses(request):
 
 @csrf_exempt
 def recordCourse(request):
-    print(request.body.decode('utf-8'))
+    # print(request.body.decode('utf-8'))
     body_request = request.body.decode('utf-8')
     body = json.loads(body_request)
+    #
+    print("voici le cours " + body["foreignKey"])
+    print(Cours.objects.get(cours=body["foreignKey"]))
     CoursT.objects.create(
         nom_cours=body["nomCours"], groupe=body["groupe"], quadrimestre=body["quadrimestre"],
         nom_prof=body["nomProf"], heure_debut=body["stringHeureDebut"], heure_fin=body["stringHeureFin"],
-        local=body["nomClasse"], jour=body["jour"])
+        local=body["nomClasse"], jour=body["jour"], id_cours=Cours.objects.get(cours=body["foreignKey"])
+    )
     return HttpResponse()
 
 
@@ -86,20 +90,29 @@ def overLapCheck(request):
     body_request = request.body.decode('utf-8')
     body = json.loads(body_request)
     everythingCourseT = []
+    tabOrdonnne = []
     print(body)
     for x in range(len(body)):
+        print("salttt")
         UeObject = Ue.objects.get(nom_ue=body[x])
         allCourses = Cours.objects.all().filter(id_ue=UeObject)
         everythingCourse = CoursSerializer(allCourses, many=True).data
+        print(len(everythingCourse))
         print(everythingCourse)
         for y in range(len(everythingCourse)):
-            coucou = everythingCourse[0]['cours']
-            print(coucou)
-            CoursObject = Cours.objects.get(cours=everythingCourse[0]["cours"])
+            CoursObject = Cours.objects.get(cours=everythingCourse[y]["cours"])
             allCoursesT = CoursT.objects.all().filter(id_cours=CoursObject)
-            everythingCourseT += CoursTSerializer(allCoursesT, many=True).data
+            everythingCourseT = CoursTSerializer(allCoursesT, many=True).data
             print(everythingCourseT)
-    return JsonResponse(everythingCourseT, safe=False)
+            for z in range(len(everythingCourseT)):
+                tabOrdonnne.append((everythingCourseT[z]["nom_cours"],
+                                    everythingCourseT[z]["heure_debut"],
+                                    everythingCourseT[z]["heure_fin"],
+                                    everythingCourseT[z]["jour"],
+                                    everythingCourseT[z]["quadrimestre"]))
+
+    # print(tabOrdonnne)
+    return JsonResponse(tabOrdonnne, safe=False)
 
 
 # Authentication
