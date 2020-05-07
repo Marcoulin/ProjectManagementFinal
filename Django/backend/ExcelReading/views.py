@@ -61,14 +61,25 @@ def DeleteAllCourse(request):
 
 @csrf_exempt
 def getScheduleFromDB(request):
-    queryLundi = CoursT.objects.all().filter(jour="LUNDI")
-    queryMardi = CoursT.objects.all().filter(jour="MARDI")
-    queryMercredi = CoursT.objects.all().filter(jour="MERCREDI")
-    queryJeudi = CoursT.objects.all().filter(jour="JEUDI")
-    queryVendredi = CoursT.objects.all().filter(jour="VENDREDI")
+    quadri = request.GET.get('quadri')
+    queryLundi = CoursT.objects.all().filter(jour="LUNDI", quadrimestre=quadri)
+    queryMardi = CoursT.objects.all().filter(jour="MARDI", quadrimestre=quadri)
+    queryMercredi = CoursT.objects.all().filter(jour="MERCREDI", quadrimestre=quadri)
+    queryJeudi = CoursT.objects.all().filter(jour="JEUDI", quadrimestre=quadri)
+    queryVendredi = CoursT.objects.all().filter(jour="VENDREDI", quadrimestre=quadri)
     matrix = [queryLundi, queryMardi, queryMercredi, queryJeudi, queryVendredi]
+    # print(json.dumps(CoursTSerializer(queryLundi, many=True).data))
+    # print(json.dumps(CoursTSerializer(queryMardi, many=True).data))
+    # print(json.dumps(CoursTSerializer(queryMercredi, many=True).data))
+    # print(json.dumps(CoursTSerializer(queryJeudi, many=True).data))
+    # print(json.dumps(CoursTSerializer(queryVendredi, many=True).data))
     doublematrix = [CoursTSerializer(matrix[x], many=True).data for x in range(len(matrix))]
     json.dumps(doublematrix)
+    print("salut")
+    # for x in range(len(doublematrix)):
+    #   for y in range(len(doublematrix[x])):
+    # print(doublematrix)
+
     return JsonResponse(doublematrix, safe=False)
 
 

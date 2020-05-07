@@ -7,7 +7,8 @@ from .models import CoursT, Cours, Ue
 class CoursTSerializer(serializers.ModelSerializer):
     class Meta:
         model = CoursT
-        fields = ('id', 'nom_cours', 'groupe', 'quadrimestre', 'heure_debut', 'nom_prof', 'heure_fin', 'local', 'jour')
+        fields = ('id', 'nom_cours', 'groupe', 'quadrimestre', 'heure_debut', 'nom_prof', 'heure_fin', 'local', 'jour',
+                  'id_cours')
 
 
 class CoursSerializer(serializers.ModelSerializer):
