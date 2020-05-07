@@ -48,6 +48,7 @@ export class CavpComponent implements OnInit {
       console.log(data);
       for (let i = 0; i < data.length; i++) {
         for (let j = i; j < data.length; j++) {
+          console.log(data[i][3] + "et voici le deuxième " + data[j][3]);
           if (data[i][4] != data[j][4] && data[i][3] === data[j][3] && this.isHoursOverLaping(data[i][1], data[i][2], data[j][1], data[j][2])) {
             const phrase: string = "le cours de " + data[i][0] + " et le cours de " + data[j][0] + " se chevauchent le " + data[i][3] + " entre " + data[i][1] + " et " + data[i][2];
             if (!this.overlapTab.includes(phrase)) {

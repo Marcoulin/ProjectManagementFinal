@@ -187,7 +187,7 @@ export class TableGeneralComponent implements OnInit, OnChanges {
               // console.log(' heure de debut = ' + stringHeureDebut + ' heure de fin ' + stringHeureFin);
               //    Extraire le nom du cours
               let nomCours = this.recombinerSplit(temp);
-              console.log(temp);
+              //console.log(temp);
               const jour = (this.sheduleTab[0][j] === '') ? this.sheduleTab[0][j - 1] : this.sheduleTab[0][j];
               const tabInfo = nomCours.split('•');
               const nomClasse = tabInfo[1]; //  TO USE
@@ -198,6 +198,8 @@ export class TableGeneralComponent implements OnInit, OnChanges {
               const nomProf = stringO.substring(iteration, stringO.length - 1); //  TO
               nomCours = stringO.substring(1, iteration - 1); //  TO USE
               const foreignKey = this.assosiationCours(nomCours);
+              console.log("ici");
+              console.log(foreignKey);
               //console.log(`le cours ${nomCours} se déroule le ${jour}`);
               // console.log(`voici le nom du cours ${nomCours} et voici son groupe ${groupe}`);
               // console.log(' le nom du prof = ' + nomProf + ' le nom du cours = ' + nomCours);
