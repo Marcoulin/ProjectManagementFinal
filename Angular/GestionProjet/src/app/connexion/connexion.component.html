@@ -1,8 +1,9 @@
+<nz-card class = "card"  [nzBordered]="false" nzTitle="Connexion">
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
 <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nickname" nzRequired>
           <span>
-            Nickname
+            Identifiant
             <i nz-icon nz-tooltip nzTitle="What do you want other to call you" nzType="question-circle" nzTheme="outline"></i>
           </span>
     </nz-form-label>
@@ -11,21 +12,22 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Mot de passe</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
       <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()" [(ngModel)]="connect.password"/>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item nz-row class="connect-area">
     <nz-form-control [nzSpan]="14" [nzOffset]="6">
-      <button nz-button nzType="primary" (click)="connectUser()">Connect</button>
+      <button nz-button nzType="primary" (click)="connectUser()">Connexion</button>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item nz-row class="sign-area">
     <nz-form-control [nzSpan]="14" [nzOffset]="6">
-      <button nz-button nzType="primary" (click)="signIn()">Inscription</button>
+      <button nz-button nzType="link" (click)="signIn()">Inscription</button>
     </nz-form-control>
   </nz-form-item>
 </form>
+</nz-card>
 
 

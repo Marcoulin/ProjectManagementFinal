@@ -1,3 +1,12 @@
-a{
+#profile, #CAVP, #HELB {
   color: aliceblue;
+  font-size: 20px;
+
+}
+
+
+
+.header {
+  background: rgb(46,80,252);
+  background: radial-gradient(circle, rgba(46,80,252,0.9892157546612395) 63%, rgba(46,80,252,0.5550420851934523) 100%);
 }

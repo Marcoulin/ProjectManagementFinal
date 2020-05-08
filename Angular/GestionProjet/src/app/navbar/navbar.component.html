@@ -1,26 +1,43 @@
-<ul class="nav nav-tabs justify-content-center bg-primary nav-fill ">
-  <li class="nav-item">
-    <a class="nav-link" routerLinkActive="active"  routerLink="Profile">Profile</a>
+<ul nz-menu nzMode="horizontal" class="header">
+  <li nz-menu-item><img src="https://www.institut-prigogine.be/wp-content/uploads/2018/08/Logo-HELB-small-1.png"
+                        style="height: auto;
+                    max-width: 200px;
+                    max-height: 150px;">
   </li>
-  <li class="nav-item">
-    <a class="nav-link " routerLinkActive="active"  routerLink="CVAP" >CVAP</a>
+  <li nz-menu-item><a id="profile" class="nav-link" routerLinkActive="active" routerLink="Profile">Profile</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link "  routerLinkActive="active"  routerLink="HELB" >HELB</a>
+  <li nz-menu-item><a id="CAVP" class="nav-link " routerLinkActive="active" routerLink="CVAP">CAVP</a>
+  </li>
+  <li nz-menu-item><a id="HELB" class="nav-link " routerLinkActive="active" routerLink="HELB">HELB</a>
   </li>
 </ul>
-<img src="https://www.institut-prigogine.be/wp-content/uploads/2018/08/Logo-HELB-small-1.png">
-<!--<div class="wrapper" style="display: flex">
-  <ul nz-menu nzMode="vertical" [ngStyle]="{'width': longueur}" nzTheme="dark" [nzInlineCollapsed]="isCollapsed"
-      style="height: 100vh" (mouseenter)="toggleCollapsed()" (mouseleave)="toggleCollapsed()">
-    <li nz-menu-item nz-tooltip nzPlacement="right" [nzTitle]="isCollapsed ? 'Profile' : ''" nzSelected>
-      <i nz-icon nzType="mail"></i>
-      <span>Profile</span>
+
+
+<!--<nav class="navbar navbar-expand-lg">
+  <ul class="nav nav-tabs justify-content-center bg-primary nav-fill ">
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="Profile">Profile</a>
     </li>
-    <li nz-submenu nzTitle="CVAP" nzIcon="appstore">
+    <li class="nav-item">
+      <a class="nav-link " routerLinkActive="active" routerLink="CVAP">CVAP</a>
     </li>
-    <li nz-submenu nzTitle="Cours" nzIcon="setting">
+    <li class="nav-item">
+      <a class="nav-link " routerLinkActive="active" routerLink="HELB">HELB</a>
     </li>
   </ul>
-  <div style="width:100%">Coucou</div>
+  <img src="https://www.institut-prigogine.be/wp-content/uploads/2018/08/Logo-HELB-small-1.png">
+</nav>
+<<div class="wrapper" style="display: flex">
+<ul nz-menu nzMode="vertical" [ngStyle]="{'width': longueur}" nzTheme="dark" [nzInlineCollapsed]="isCollapsed"
+    style="height: 100vh" (mouseenter)="toggleCollapsed()" (mouseleave)="toggleCollapsed()">
+  <li nz-menu-item nz-tooltip nzPlacement="right" [nzTitle]="isCollapsed ? 'Profile' : ''" nzSelected>
+    <i nz-icon nzType="mail"></i>
+    <span>Profile</span>
+  </li>
+  <li nz-submenu nzTitle="CVAP" nzIcon="appstore">
+  </li>
+  <li nz-submenu nzTitle="Cours" nzIcon="setting">
+  </li>
+</ul>
+<div style="width:100%">Coucou</div>
 </div>-->

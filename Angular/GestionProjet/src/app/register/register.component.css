@@ -1,5 +1,17 @@
 [nz-form] {
   max-width: 600px;
 }
+.card{
+  width: 700px;
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  margin-left: -350px;
+  border-radius: 20px;
+  -webkit-box-shadow: 0 8px 6px -6px black;
+  -moz-box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px black;
+
+}
 
 
