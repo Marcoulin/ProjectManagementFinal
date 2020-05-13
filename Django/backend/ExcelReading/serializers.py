@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import CoursT, Cours, Ue
+from .models import CoursT, Cours, Ue, UserCourse
 
 
 class CoursTSerializer(serializers.ModelSerializer):
@@ -21,6 +21,12 @@ class UeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ue
         fields = ('nom_ue', 'quadrimestre_ue', 'nombre_heure_ue', 'nombre_credit_ue')
+
+
+class UserCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserCourse
+        fields = ('id', 'nom_cours', 'nom_etudiant')
 
 
 # User Authentication

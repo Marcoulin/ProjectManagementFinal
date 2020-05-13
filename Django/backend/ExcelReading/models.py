@@ -34,6 +34,11 @@ class CoursT(models.Model):
     jour = models.CharField(max_length=200, null=True)
     id_cours = models.ForeignKey(Cours, on_delete=models.CASCADE, null=True)
 
+
+class UserCourse(models.Model):
+    nom_cours = models.ForeignKey(Cours, on_delete=models.CASCADE, unique=False)
+    nom_etudiant = models.CharField(max_length=200, unique=False, null=True)
+    
 # def __str__(self):
 #  return self.nom_cours
 #  ForeignkeyOneToMany = models.ForeignKey(Movie, on_delete=models.CASCADE)
