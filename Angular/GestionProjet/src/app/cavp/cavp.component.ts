@@ -23,9 +23,11 @@ export class CavpComponent implements OnInit {
   checkedTab: string[] = [];
   overlapTab: string[] = [];
   isCorrect = false;
+  sessionValue: String;
 
   ngOnInit(): void {
     this.initialisationTab()
+    this.sessionValue = sessionStorage.getItem("Username");
   }
 
   initialisationTab() {

@@ -15,6 +15,7 @@ export class CVAPComponent implements OnInit {
   isIndeterminate = false;
   listOfDisplayData: ItemData[] = [];
   listOfAllData: any = [];
+  sessionValue : String = "";
 
 
   mapOfCheckedId: { [key: string]: boolean } = {};

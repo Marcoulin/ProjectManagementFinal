@@ -13,6 +13,7 @@ export class ConnexionComponent implements OnInit {
   validateForm: FormGroup;
   connect;
 
+
   submitForm(): void {
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
@@ -38,6 +39,7 @@ export class ConnexionComponent implements OnInit {
       username: ''
     };
 
+
   }
 
   connectUser(){
@@ -45,6 +47,8 @@ export class ConnexionComponent implements OnInit {
       response => {
         alert('User: ' + this.connect.username+ ' is connected');
         this.router.navigate(['Profile']);
+        sessionStorage.setItem("Username", this.connect.username);
+
       },
       error => {
         console.log('error', error);

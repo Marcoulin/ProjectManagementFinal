@@ -1,0 +1,9 @@
+version: "3"
+services:
+  gestionprojet:
+    build: ""
+    container_name: cavpManager
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/cavpManager
