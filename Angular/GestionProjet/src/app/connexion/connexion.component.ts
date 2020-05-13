@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../user.service";
 import {Router} from "@angular/router";
 
@@ -26,7 +26,8 @@ export class ConnexionComponent implements OnInit {
   }
 
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {}
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -40,22 +41,21 @@ export class ConnexionComponent implements OnInit {
 
   }
 
-  connectUser(){
+  connectUser() {
     this.userService.loginUser(this.connect).subscribe(
       response => {
-        alert('User: ' + this.connect.username+ ' is connected');
+        alert('User: ' + this.connect.username + ' is connected');
         this.router.navigate(['Profile']);
+        sessionStorage.setItem("username", this.connect.username);
       },
       error => {
         console.log('error', error);
       }
-
-
     )
 
   }
 
-  signIn(){
+  signIn() {
     this.router.navigate(['Inscription']);
   }
 }

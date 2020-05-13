@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../Services/api.service';
-
+import {ProfileComponent} from "../profile/profile.component";
 @Component({
   selector: 'app-cvap',
   templateUrl: './cavp.component.html',
@@ -67,6 +67,11 @@ export class CavpComponent implements OnInit {
 
   handleOk(): void {
     this.overlapTab = [];
+    console.log("tu as bien cliqué sur okk mec")
+    this.api.sendScheduleToDB(this.checkedTab).subscribe((data: number) => {
+      console.log("tu as bien envoyé tes données et voicci le nombre de crédit " + data)
+      this.api.nombrecredit = data;
+    });
     this.isVisible = false;
   }
 

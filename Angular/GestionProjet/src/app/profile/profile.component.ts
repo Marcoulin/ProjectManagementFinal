@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ApiService} from "../Services/api.service";
 
 @Component({
   selector: 'app-profile',
@@ -6,29 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  listOfData = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
-  constructor() { }
+  nbHours: number = 0;
+  nbCredits: number = 0;
+  CoursTab: any = []
 
-  ngOnInit(): void {
+  constructor(private api: ApiService) {
   }
 
+  ngOnInit(): void {
+    this.nbCredits = this.api.nombrecredit;
+    //this.api.getSpecificSchedule().subscribe((data)=>console.log("effectivement"));
+    this.api.gettingCourseList().subscribe((data) => {
+      console.log(data);
+      this.CoursTab = data;
+    });
+    this.api.gettingHoursCredits().subscribe((data: number) => this.nbHours = data);
+  }
 }
