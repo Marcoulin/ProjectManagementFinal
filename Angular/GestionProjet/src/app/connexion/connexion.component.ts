@@ -48,12 +48,12 @@ export class ConnexionComponent implements OnInit {
       response => {
         alert('User: ' + this.connect.username + ' is connected');
         this.router.navigate(['Profile']);
-<<<<<<< HEAD
+//<<<<<<< HEAD
         sessionStorage.setItem("Username", this.connect.username);
 
-=======
+//=======
         sessionStorage.setItem("username", this.connect.username);
->>>>>>> f969c1a8378c141a92a6df09fa611e7f42d8a796
+//>>>>>>> f969c1a8378c141a92a6df09fa611e7f42d8a796
       },
       error => {
         console.log('error', error);
